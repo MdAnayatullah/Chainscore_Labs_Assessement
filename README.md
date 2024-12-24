@@ -135,3 +135,176 @@ python error_tests.py
 ## Questions?
 
 Open an issue in this repository for any questions about the specification or requirements.
+
+
+Codec Systems Encoder/Decoder
+
+This project implements an encoder and decoder capable of serializing and deserializing data structures into deterministic octet sequences, as specified in the provided SPEC.md. The implementation ensures correctness, efficiency, and robustness.
+
+Features
+
+Supported Data Types:
+
+Null values
+
+Octet sequences (bytes)
+
+Integers (little-endian encoding)
+
+Sequences (arrays/lists)
+
+Dictionaries (key-ordered)
+
+Performance:
+
+Optimized for large datasets
+
+Supports streaming and efficient memory usage
+
+Robustness:
+
+Comprehensive error handling
+
+Graceful handling of corrupted or invalid inputs
+
+Installation
+
+Clone the repository:
+
+git clone https://github.com/Chainscore-Hiring/codec-systems-MdAnayatullah.git
+cd codec-systems-MdAnayatullah
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+Usage
+
+Encoding and Decoding Example
+
+from encoder import encode
+from decoder import decode
+
+# Sample data
+data = {
+    "key": "value",
+    "list": [1, 2, 3]
+}
+
+# Encode the data
+encoded = encode(data)
+print("Encoded Data:", encoded)
+
+# Decode the data
+decoded, _ = decode(encoded)
+print("Decoded Data:", decoded)
+
+# Verify correctness
+assert decoded == data
+
+Testing
+
+Running Unit Tests
+
+Run test vectors:
+
+python test_vectors.py
+
+Run error handling tests:
+
+python error_tests.py
+
+Run performance tests:
+
+Generate large test data:
+
+python perf_test_gen.py --size 10485760 --seed 42 --output test_data.json
+
+Run performance tests:
+
+python performance_test.py
+
+Error Handling
+
+Unsupported Types:
+
+Raises TypeError for unsupported data types such as set.
+
+Corrupted Data:
+
+Raises ValueError when encountering invalid or incomplete input data.
+
+Examples:
+
+try:
+    encode(set([1, 2, 3]))  # Unsupported type
+except TypeError as e:
+    print("Error:", e)
+
+try:
+    decode(b'\x03\xFF\xFF')  # Corrupted data
+except ValueError as e:
+    print("Error:", e)
+
+Performance Considerations
+
+Efficient Data Handling:
+
+Uses streaming processing for large datasets.
+
+Lazy Decoding:
+
+Avoids unnecessary computation by decoding data only when accessed.
+
+Optimized Memory Usage:
+
+Processes large sequences and dictionaries in chunks to minimize memory overhead.
+
+Evaluation Criteria
+
+Correctness (70%):
+
+Exact match with provided test vectors.
+
+Handles nested and complex data structures.
+
+Code Quality (20%):
+
+Clean, readable, and Pythonic code.
+
+Well-documented functions and classes.
+
+Performance (10%):
+
+Handles large datasets efficiently.
+
+Meets performance benchmarks.
+
+Repository Structure
+
+.
+├── encoder.py          # Encoding logic
+├── decoder.py          # Decoding logic
+├── test_vectors.py     # Test vectors for validation
+├── error_tests.py      # Error handling tests
+├── performance_test.py # Performance test script
+├── perf_test_gen.py    # Test data generator
+├── requirements.txt    # Python dependencies
+├── SPEC.md             # Specification document
+└── README.md           # Project documentation
+
+Future Enhancements
+
+Support for Additional Data Types:
+
+Floating-point numbers
+
+Boolean values
+
+Advanced Error Reporting:
+
+Detailed tracebacks for decoding errors.
+
+Streaming Support:
+
+Real-time encoding/decoding for large data streams.
